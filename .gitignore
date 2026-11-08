@@ -1,0 +1,4 @@
+upstream/*.dll
+upstream/*.part
+.DS_Store
+dist/
