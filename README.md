@@ -49,7 +49,7 @@ The fix needs files inside the CrossOver app bundle. So it is applied to a **cop
 
 The same release zip is published in two places:
 
-- **PCGamingWiki Files:** `<PCGamingWiki file page URL>`
+- **PCGamingWiki Files:** https://community.pcgamingwiki.com/files/file/4186-forza-horizon-5-d3dmetal-fix-for-crossover-mac/ (zip password `pcgw`)
 - **GitHub Releases:** `https://github.com/Andytizer/fh5-crossover-steam-fix/releases` (or `git clone` this repo)
 
 Each release's SHA-256 is listed on both download pages (it can't be in this README, which is inside the zip).
