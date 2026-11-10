@@ -2,14 +2,19 @@
 
 FH5 D3DMetal fix for CrossOver.
 
-Scripts that apply [xvferxedd/fh5-d3dmetal-fix](https://github.com/xvferxedd/fh5-d3dmetal-fix) to
+Scripts that apply xvferxedd's **fh5-d3dmetal-fix** to
 **CrossOver** on Apple Silicon Macs, so Forza Horizon 5 (Steam) runs in a CrossOver bottle with D3DMetal,
 without Bridgeplay or the Highball runner.
+
+> **Upstream is gone.** The upstream repository and its author's account disappeared in November 2026. Since
+> 1.0.1 this repo bundles upstream's two prebuilt DLLs and its complete source at the last commit
+> (`ebd20dbe`), unchanged, in `upstream/` (GPL-3.0; see `upstream/README.md`). All credit for the fix stays with
+> xvferxedd.
 
 The upstream project does the real work: a `d3d12.dll` proxy in front of D3DMetal (descriptor-stride fix for
 `Fatal Error 0x800705AA`, dual-source blend rewrite for black/missing objects, timestamp queries, unwind guard)
 and a `ws2_32` wrapper for online play. This repo only adapts the install to CrossOver. Read the upstream
-README for what each fix does.
+README (`upstream/source/README.md`) for what each fix does.
 
 > Not affiliated with or endorsed by CodeWeavers, Apple, Microsoft or Playground Games. No CrossOver, Apple,
 > Microsoft or game files are included. You need your own CrossOver licence and your own Steam copy of FH5.
@@ -42,7 +47,7 @@ The fix needs files inside the CrossOver app bundle. So it is applied to a **cop
 ## Requirements
 
 - Apple Silicon Mac, CrossOver (tested: CrossOver Preview), a Steam bottle (`win64`)
-- macOS built-ins only: `sh`, `perl`, `curl`, `shasum`, `ditto`, `plutil`. No Python, Docker or Xcode needed.
+- macOS built-ins only: `sh`, `perl`, `shasum`, `ditto`, `plutil`. No Python, Docker or Xcode needed.
 - About 2–3 GB for the app copy, plus the size of your Steam bottle
 
 ## Download
@@ -61,7 +66,7 @@ GitHub Issues.
 Quit CrossOver completely first. Unzip the release, open Terminal in that folder, then:
 
 ```sh
-sh fetch-upstream.sh                                   # upstream DLLs, pinned commit, hash-checked
+sh fetch-upstream.sh                                   # checks the bundled upstream DLLs (no download)
 
 sh make-copies.sh --app "/Applications/CrossOver Preview.app" --bottle "Steam"
 #   -> "/Applications/CrossOver Preview (FH5).app" and bottle "Steam (Forza Horizon 5)"
@@ -115,7 +120,7 @@ If your bottles are not in the default folder, set `CX_BOTTLE_PATH` for all scri
 - DLSS is mapped to MetalFX. Keep Frame Generation off. Keep Steam Cloud on.
 - Logs: add `"HB_DEBUG" = "1"` to the bottle's `[EnvironmentVariables]`. Logs go to `C:\highball\logs`.
   The other upstream `HB_*` switches work the same way, without the `NOTPROTON_ENV_` prefix.
-- Xbox sign-in: see upstream README step 11. Put `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS` in `cxbottle.conf`.
+- Xbox sign-in: see upstream README step 11 (`upstream/source/README.md`). Put `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS` in `cxbottle.conf`.
 
 ## Updates and undo
 
@@ -131,7 +136,7 @@ If your bottles are not in the default folder, set `CX_BOTTLE_PATH` for all scri
   **26.3 it fits exactly**. CrossOver Preview's `ws2_32` has two more exports (`WSCEnumProtocols32`,
   `WSCInstallProvider64_32`, LSP-installer functions), and the ordinals above 117 shift. All classic ordinals
   (1–117) and every name the wrapper forwards match. `setup.sh --check` reports this for your version. A perfect
-  fit on Preview needs rebuilding upstream `tools/ws2_32-netfix` against its `ws2_32.dll` (llvm-mingw).
+  fit on Preview needs rebuilding `upstream/source/tools/ws2_32-netfix` against its `ws2_32.dll` (llvm-mingw).
 - **D3DMetal version.** Upstream was tuned on D3DMetal 4.0b3. `setup.sh` warns if the D3DMetal in use is another
   version. On 26.3 use `--d3dmetal-from`. The swap is verified statically (imports, exported symbols), not yet
   in game.
@@ -142,7 +147,8 @@ If your bottles are not in the default folder, set `CX_BOTTLE_PATH` for all scri
 
 | File | Purpose |
 |---|---|
-| `fetch-upstream.sh` | Downloads upstream `bin/d3d12.dll` and `bin/ws2_32.dll` at a pinned commit, checks `upstream/SHA256SUMS` |
+| `fetch-upstream.sh` | Checks the bundled `upstream/d3d12.dll` and `upstream/ws2_32.dll` against `upstream/SHA256SUMS` |
+| `upstream/` | Upstream's prebuilt DLLs and complete source at commit `ebd20dbe` (`upstream/README.md`) |
 | `make-copies.sh` | Copies the app and the bottle (new BottleID) |
 | `setup.sh` | Inspects (`--check`) and applies the fix to the app copy and bottle. Idempotent; keeps `.orig` backups |
 | `install-game.sh` | Copies the proxy into the game folder |
@@ -154,11 +160,11 @@ If your bottles are not in the default folder, set `CX_BOTTLE_PATH` for all scri
 ## Credits and licence
 
 - **fh5-d3dmetal-fix** by xvferxedd: the proxy, the ws2_32 wrapper, the unwind fix and the research.
-  GPL-3.0. https://github.com/xvferxedd/fh5-d3dmetal-fix
+  GPL-3.0. Its repository (github.com/xvferxedd/fh5-d3dmetal-fix) is no longer online; a copy is in `upstream/`.
 - **Highball** (tsshim, which the proxy is built on) by Gauthier Piarrette, GPL-3.0.
   https://github.com/gauthierpiarrette/highball
 - Upstream credits MACxus (FH5 profile), Bridgeplay and whyAm-i's FH4 Mac patches.
 
 This repository is licensed **GPL-3.0** (see `LICENSE`), as it contains code derived from the projects above.
-The upstream DLLs are not redistributed here. `fetch-upstream.sh` downloads them from upstream, where their source is
-published at the same commit.
+The upstream DLLs are redistributed unchanged under GPL-3.0, with their complete source in `upstream/source/`
+(build with `upstream/source/build.sh` and `upstream/source/tools/ws2_32-netfix/build.sh`).

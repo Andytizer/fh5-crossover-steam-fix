@@ -114,8 +114,8 @@ if grep -q '^"CX_GRAPHICS_BACKEND_VERSION"' "$B/cxbottle.conf"; then
 fi
 
 # upstream binaries
-for f in d3d12.dll ws2_32.dll; do test -f "$HERE/upstream/$f" || die "upstream/$f missing: run sh fetch-upstream.sh"; done
-(cd "$HERE/upstream" && shasum -a 256 -c SHA256SUMS >/dev/null) || die "upstream/ hash mismatch: re-run sh fetch-upstream.sh"
+for f in d3d12.dll ws2_32.dll; do test -f "$HERE/upstream/$f" || die "upstream/$f missing: download the release zip again"; done
+(cd "$HERE/upstream" && shasum -a 256 -c SHA256SUMS >/dev/null) || die "upstream/ hash mismatch: download the release zip again"
 
 # ws2_32 wrapper fit
 set +e; WS_MSG="$(perl "$PEPL" compare-wrapper "$HERE/upstream/ws2_32.dll" "$W/ws2_32.dll")"; WS_RC=$?; set -e

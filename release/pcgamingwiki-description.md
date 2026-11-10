@@ -1,10 +1,12 @@
-<!-- Paste into the PCGamingWiki Files upload form. Fill in the two URLs and the SHA-256 from dist/*.sha256. -->
+<!-- Paste into the PCGamingWiki Files form (update the existing file 4186 with a new version). -->
 
-**Title:** Forza Horizon 5 – D3DMetal fix for CrossOver (macOS)
+**Title:** Forza Horizon 5 – D3DMetal fix for CrossOver Mac
 
-**Category:** Unofficial patches / Tools (Forza Horizon 5)
+**Version:** 1.0.1
 
-**Version:** 1.0.0
+**What's new in 1.0.1:** the original fh5-d3dmetal-fix repository by xvferxedd is no longer online, so 1.0.0 could
+not download its two DLLs. 1.0.1 includes them (unchanged) together with their complete GPL-3.0 source.
+Nothing else about the install changed.
 
 **Description:**
 
@@ -21,14 +23,13 @@ The scripts modify a **copy** of CrossOver and a **copy** of your Steam bottle, 
 `setup.sh --check` inspects your CrossOver version first and changes nothing.
 
 **Supported:** CrossOver Preview 20261015 (D3DMetal 4.0b3) and CrossOver 26.3. CrossOver 26.3 ships D3DMetal 3.0;
-`setup.sh --d3dmetal-from` can swap in 4.0b3 from your own CrossOver Preview or Apple Game Porting Toolkit install
-(checked for compatibility first, original kept). Tested on macOS 27: Preview on a real install, 26.3 by a full
-install/uninstall cycle on a copy. In-game results on 26.3 are still being collected. Please report yours on GitHub.
+`setup.sh --d3dmetal-from` swaps in 4.0b3 from your own CrossOver Preview (checked for compatibility first,
+original kept). In-game results are still being collected. Please report yours on GitHub.
 
 **Requirements:** Apple Silicon Mac, CrossOver, a Steam bottle, your own Steam copy of Forza Horizon 5.
 Uses only tools built into macOS (no Python, Docker or Xcode).
 
-**Install:** unzip, open Terminal in the folder, follow README.md:
+**Install:** unzip (password `pcgw`), open Terminal in the folder, follow README.md:
 
     sh fetch-upstream.sh
     sh make-copies.sh --app "/Applications/CrossOver Preview.app" --bottle "Steam"
@@ -40,14 +41,19 @@ Uses only tools built into macOS (no Python, Docker or Xcode).
     # CrossOver 26.3: copy "/Applications/CrossOver.app" instead, and add to both setup.sh lines:
     #   --d3dmetal-from "/Applications/CrossOver Preview.app"
 
-**Contents:** shell and Perl scripts, README, CHANGELOG, LICENSE. No game, CrossOver, Apple or Microsoft files.
-The two upstream DLLs are not included: `fetch-upstream.sh` downloads them from the upstream GitHub repository
-at a pinned commit and verifies their SHA-256.
+**Contents:** shell and Perl scripts, README, CHANGELOG, LICENSE, and `upstream/`: the two fh5-d3dmetal-fix DLLs
+(`d3d12.dll` proxy, `ws2_32.dll` network fix, unchanged, hash-checked by `fetch-upstream.sh`) with their complete
+source. No game, CrossOver, Apple or Microsoft files.
 
-**SHA-256 (fh5-crossover-steam-fix-1.0.0.zip):** `fe080cd861045179623d89a6e844229344d945abd496524ff510ef5054df9a90`
+**Archive password:** `pcgw`
 
-**Source, issues and documentation:** `https://github.com/Andytizer/fh5-crossover-steam-fix`
+**File:** `fh5-crossover-steam-fix-1.0.1-pcgw.zip`, SHA-256
+`e63a9c39738ebe4ede20154d9b5f3e7bc072e980b7f550225e2b26e2a5eb9fcb`.
+Its contents are identical to `fh5-crossover-steam-fix-1.0.1.zip` on the GitHub release page (SHA-256
+`de0ba6fee3184c6fcb6480206ffd5c3ba3a493c6b1750d1e12a8ba72ed8a2274`).
 
-**Credits:** fh5-d3dmetal-fix by xvferxedd (https://github.com/xvferxedd/fh5-d3dmetal-fix), built on Highball's
-tsshim by Gauthier Piarrette (https://github.com/gauthierpiarrette/highball). Licensed GPL-3.0.
-Not affiliated with CodeWeavers, Apple, Microsoft or Playground Games. Use at your own risk.
+**Source, issues and documentation:** https://github.com/Andytizer/fh5-crossover-steam-fix
+
+**Credits:** fh5-d3dmetal-fix by xvferxedd (original repository no longer online; preserved under GPL-3.0 in this
+release), built on Highball's tsshim by Gauthier Piarrette (https://github.com/gauthierpiarrette/highball).
+Licensed GPL-3.0. Not affiliated with CodeWeavers, Apple, Microsoft or Playground Games. Use at your own risk.

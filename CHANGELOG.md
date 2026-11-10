@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.1 — 2026-11-10
+
+- The upstream repository (xvferxedd/fh5-d3dmetal-fix) and its author's account are gone, so `fetch-upstream.sh`
+  could no longer download the DLLs. The release now bundles upstream's `d3d12.dll` and `ws2_32.dll` (unchanged,
+  same SHA-256 as 1.0.0 checked) and upstream's complete source at commit `ebd20dbe` in `upstream/source/`, as the
+  GPL-3.0 requires. `fetch-upstream.sh` now only verifies the bundled files.
+- README links the PCGamingWiki download page.
+- `install-game.sh` and `make-copies.sh` help no longer prints the `set -eu` line.
+- No change to what `setup.sh`, `install-game.sh` or `uninstall.sh` install.
+
 ## 1.0.0 — 2026-11-08
 
 First release.
